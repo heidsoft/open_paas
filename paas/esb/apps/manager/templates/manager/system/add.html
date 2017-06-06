@@ -1,0 +1,37 @@
+{% extends "manager/base.html" %}
+{% load bootstrap %}
+
+{% block main %}
+
+<div class="main-page box-info">
+    <div class="main-header">
+        <span>添加新组件系统</span>
+    </div>
+
+    <div class="page-content" style="width: 70%">
+        <form action="" method="post" class="form-inline form-columns">{% csrf_token %}
+            {{ form.name|bootstrap }}
+            {{ form.label|bootstrap }}
+            {{ form.interface_admin|bootstrap }}
+            {{ form.execute_timeout|bootstrap }}
+            {{ form.query_timeout|bootstrap }}
+            {{ form.remark|bootstrap }}
+            <div class="form-group action">
+                <button type="submit" class="btn btn-primary">确认添加</button> 
+                <button type="button" class="btn btn-default cancel">取消</button> 
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+$(function() {
+    $('button.cancel').bind('click', function() {
+       window.location.href = "{% url 'manager.system.list' %}"; 
+    });    
+});
+</script>
+{% endblock %}

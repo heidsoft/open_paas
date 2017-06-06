@@ -1,0 +1,133 @@
+{% extends "manager/buffet_comp/base.html" %}
+{% load bootstrap %}
+
+{% block main %}
+
+<style type="text/css" media="screen">
+.component-groups .system-name {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 40px;
+}
+</style>
+
+{% include "manager/buffet_comp/helpers/buffet_tab.html" with hilight="list" %} 
+<div class="mymodal-backdrop"></div>
+<div class="row">
+    <div class="col-md-12">
+        {% regroup items by system as system_list %}
+
+        <ul class="component-groups list-unstyled">
+            {% for system in system_list %}
+            <li><span class="system-name">{{ system.grouper.name|default:"BUFFET" }}</span>
+                <table data-sortable="" class="table table-hover table-striped" data-sortable-initialized="true">
+                <colgroup>
+                    <col></col>
+                    <col width="200px"></col>
+                    <col width="300px"></col>
+                    <col width="160px"></col>
+                </colgroup>
+                {% for item in system.list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'manager.buffet_comp.edit' item.pk %}">
+                            [{{ item.registed_http_method }}]
+                            {{ item.registed_path }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ item.name }}
+                    </td>
+                    <td>{{ item.created_time|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <div class="dropdown esb_url">
+                            <button class="btn btn-success show_esb_url" title="组件地址" id="{{ item.pk }}">
+                                组件地址
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default btn-link-url" href="{{ host }}{{ item.registed_path }}" target="_blank">
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                        </a>
+                                    </span>
+                                    <input type="text" class="form-control invoke-url" onfocus="this.select()" value="{{ host }}{{ item.registed_path }}" readonly>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default copy-to-clipboard" data-toggle="tooltip" data-placement="bottom" title="复制到剪贴板">
+                                            <i class="fa fa-clipboard" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            </li>
+            {% empty %}
+            <li>
+                <table data-sortable="" class="table table-hover table-striped" data-sortable-initialized="true">
+                    <tr>
+                        <td colspan="5" style="text-align: center">您还没有相关自助接入组件信息
+                    </tr>
+                </table>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div>
+    {{ pager.get_bootstrap_display|safe }} 
+</div>
+{% endblock %}
+{% block footer %}
+    <script src="{{ STATIC_URL }}esb/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+            $('.show_esb_url').bind('click', function () {
+                $('body').addClass('menu-active');
+                $('#'+this.id).parent('.dropdown').find('.dropdown-content').show();
+            });
+            $('.mymodal-backdrop').bind('click', function () {
+                $('body').removeClass('menu-active');
+                $('.dropdown .dropdown-content').hide();
+            });
+            $('.copy-to-clipboard').bind('click', function (ev) {
+                var btn = ev.currentTarget;
+                var input = $(btn).parent().prev();
+                var el_tooltip = $(btn).parent().find('.tooltip-inner');
+
+                input[0].select();
+                try {
+                    document.execCommand("copy");
+                    el_tooltip.text('已复制');
+                } catch(err) {
+                    el_tooltip.text('复制失败，请手动复制');
+                }
+                clearSelection();
+            });
+            function clearSelection() {
+                var sel;
+                if ( (sel = document.selection) && sel.empty ) {
+                    sel.empty();
+                } else {
+                    if (window.getSelection) {
+                        window.getSelection().removeAllRanges();
+                    }
+                    var activeEl = document.activeElement;
+                    if (activeEl) {
+                        var tagName = activeEl.nodeName.toLowerCase();
+                        if ( tagName == "textarea" ||
+                                (tagName == "input" && activeEl.type == "text") ) {
+                            // Collapse the selection to the end
+                            activeEl.selectionStart = activeEl.selectionEnd;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+{%  endblock %}

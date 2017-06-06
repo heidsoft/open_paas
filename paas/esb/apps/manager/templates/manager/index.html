@@ -1,0 +1,112 @@
+{% extends "manager/base.html" %}
+
+{% block header %}
+    <link href='{{ STATIC_URL }}esb/css/sFlow.{{CSS_SUFFIX}}' rel="stylesheet">
+{% endblock %}
+<script src="{{ STATIC_URL }}esb/js/sFlow.{{JS_SUFFIX}}"></script>
+<script type="text/javascript" charset="utf-8">
+    $('#flow_one').flowList();
+    $('#flow_two').flowList();
+</script>
+{% block main %}
+<div class="main-page box-info">
+    <div class="main-header">
+        <span>ESB简介</span>
+        <a href="{% url 'guide.page.index' %}" title="跳转到使用指南" target="_blank">
+            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="page-content" style="margin: 5px 30px; line-height: 25px">
+        {{ index_html|safe }}
+        <p style="margin-top: 10px;">更多内容请查看<a target="_blank" href="{% url 'guide.page.index' %}">
+            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+            使用指南
+        </a></p>
+        <div style="padding-top: 25px;">
+            <span style="font-weight: bold">组件开发方式简述</span>
+            <div>
+                <p>编码方式：编码组件模块逻辑，通过注册系统以及组件通道，提供组件服务。适用于需要编码具体业务逻辑的组件。</p>
+                <p>自助接入方式：管理端配置接口信息，提供组件服务。适用于无需具体业务逻辑并且支持HTTP协议的组件。</p>
+            </div>
+            <div style="margin-top: 25px;">
+                <span style="font-weight: bold">编码方式流程
+                <a href="{% url 'guide.page' name='add_new_component' %}" title="跳转到编码方式" target="_blank">
+                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                </a>
+                </span>
+                <ul class="pl0 flow-box-list" id="flow_one">
+                    <li class="flow-box">
+                        <div class="p10 flow-one-bg-success" data-toggle="tooltip" data-placement="top" title="根据具体使用场景编码业务逻辑">
+                            编码具体组件逻辑
+                        </div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                    <li class="flow-box">
+                        <div class="p10 flow-one-bg-success"data-toggle="tooltip" data-placement="top" title="点击`系统管理`，注册组件所属系统信息">
+                            注册组件系统</div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                    <li class="flow-box">
+                        <div class="p10 flow-one-bg-success" data-toggle="tooltip" data-placement="top" title="点击`通道管理`，注册编码的组件信息">
+                            添加组件通道</div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                    <li class="flow-box">
+                        <div class="p10 flow-one-bg-success" data-toggle="tooltip" data-placement="top" title="完成前面操作，然后通过`重启ESB服务`，组件即可提供服务">
+                            完成组件</div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div style="margin-top: 30px;">
+                <span style="font-weight: bold;">自助接入方式流程
+                    <a href="{% url 'guide.page' name='buffet_component' %}" title="跳转到自助接入方式" target="_blank">
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </a>
+                </span>
+                <ul class="pl0 flow-box-list" id="flow_two">
+                    <li class="flow-box">
+                        <div class="p10 flow-two-bg-success" data-toggle="tooltip" data-placement="top" title="点击`系统管理`，注册组件所属系统信息">
+                            注册组件系统</div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                    <li class="flow-box">
+                        <div class="p10 flow-two-bg-success" data-toggle="tooltip" data-placement="top" title="点击`组件自助接入`，配置组件信息以及目标接口信息，接入组件">
+                            添加组件配置信息</div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                    <li class="flow-box">
+                        <div class="p10 flow-two-bg-success" data-toggle="tooltip" data-placement="top" title="完成前面操作，无须重启服务，即可完成组件接入">
+                            完成组件</div>
+                        <div class="flow-arrow">
+                            <div></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script src="{{ STATIC_URL }}esb/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}esb/js/sFlow.{{JS_SUFFIX}}"></script>
+<script type="text/javascript" charset="utf-8">
+    $('[data-toggle="tooltip"]').tooltip();
+    $('#flow_one').flowList();
+    $('#flow_two').flowList();
+</script>
+{% endblock %}

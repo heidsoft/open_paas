@@ -1,0 +1,18 @@
+# pkg used in prod env should be added to requirements_prod.txt also
+
+Django==1.8.11
+requests==2.9.1
+jinja2==2.8
+sqlalchemy==1.0.12
+pymysql==0.6.7
+redis==2.10.5
+thrift==0.9.3
+gevent==1.1.2
+
+# no need for prod
+gunicorn==19.6.0
+django-nose==1.4.4
+flake8==2.5.4
+
+# encrypt
+pycrypto==2.6.1

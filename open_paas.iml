@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="django" name="Django">
+      <configuration>
+        <option name="rootFolder" value="$MODULE_DIR$/esb" />
+        <option name="settingsModule" value="settings.py" />
+        <option name="manageScript" value="manage.py" />
+        <option name="environment" value="&lt;map/&gt;" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="TemplatesService">
+    <option name="TEMPLATE_CONFIGURATION" value="Django" />
+    <option name="TEMPLATE_FOLDERS">
+      <list>
+        <option value="$MODULE_DIR$/paas/esb/apps/guide/templates/guide" />
+        <option value="$MODULE_DIR$/paas/esb/apps/manager/templates/manager" />
+        <option value="$MODULE_DIR$/paas/esb/apps/manager/templates/manager/system" />
+        <option value="$MODULE_DIR$/paas/esb/apps/manager/templates/manager/channel" />
+        <option value="$MODULE_DIR$/paas/esb/apps/manager/templates/manager/buffet_comp" />
+        <option value="$MODULE_DIR$/paas/esb/apps/manager/templates/manager/buffet_comp/helpers" />
+        <option value="$MODULE_DIR$/paas/esb/apps/bootstrapform/templates/bootstrapform" />
+        <option value="$MODULE_DIR$/paas/esb/mainsite/templates/mainsite" />
+        <option value="$MODULE_DIR$/paas/static/doc" />
+        <option value="$MODULE_DIR$/paas/static/esb/assets/smartmenus/demo" />
+        <option value="$MODULE_DIR$/paas/static/assets/jquery-ui-1.11.0.custom" />
+        <option value="$MODULE_DIR$/paas/templates" />
+        <option value="$MODULE_DIR$/paas/templates/app" />
+        <option value="$MODULE_DIR$/paas/templates/home" />
+        <option value="$MODULE_DIR$/paas/templates/saas" />
+        <option value="$MODULE_DIR$/paas/templates/admin" />
+        <option value="$MODULE_DIR$/paas/templates/error" />
+        <option value="$MODULE_DIR$/paas/templates/guide" />
+        <option value="$MODULE_DIR$/paas/templates/engine" />
+        <option value="$MODULE_DIR$/paas/templates/account" />
+        <option value="$MODULE_DIR$/paas/templates/release" />
+        <option value="$MODULE_DIR$/paas/templates/resource" />
+        <option value="$MODULE_DIR$/login/templates" />
+        <option value="$MODULE_DIR$/login/templates/admin" />
+        <option value="$MODULE_DIR$/login/templates/account" />
+      </list>
+    </option>
+  </component>
+</module>

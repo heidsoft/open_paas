@@ -1,0 +1,14 @@
+# new or upgrade pkg need to be downloaded to $proj/bin/pkgs/
+# pip install --download=$proj/bin/pkgs/ -r PATH_TO_requirements_prod.txt
+
+Django==1.8.11
+requests==2.9.1
+jinja2==2.8
+sqlalchemy==1.0.12
+pymysql==0.6.7
+redis==2.10.5
+thrift==0.9.3
+gevent==1.1.2
+
+# encrypt
+pycrypto==2.6.1

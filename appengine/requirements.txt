@@ -1,0 +1,10 @@
+Django==1.8.11
+djangorestframework==3.3.3
+Markdown==2.6.6
+requests==2.9.1
+PyYAML==3.11
+python-etcd==0.4.3
+pymysql==0.6.7
+gunicorn==19.6.0
+uWSGI==2.0.13.1
+gevent==1.1.2

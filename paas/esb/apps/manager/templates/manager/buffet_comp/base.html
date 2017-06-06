@@ -1,0 +1,23 @@
+{% extends "manager/base.html" %}
+
+{% block container %}
+<style type="text/css" media="screen">
+.form-group .control-label {
+    margin-bottom: 5px;
+} 
+</style>
+
+<div class="main-page box-info">
+    <div class="main-header">
+        <span>组件自助接入</span>
+        <a href="{% url 'guide.page' name='buffet_component' %}" title="跳转到使用指南" target="_blank">
+            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+        </a>
+    </div>
+
+    {% block main %}
+    {% endblock %}
+
+</div>
+
+{% endblock %}

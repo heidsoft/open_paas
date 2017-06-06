@@ -1,0 +1,139 @@
+{% extends "manager/base.html" %}
+
+{% block header %}
+    <link href='{{ STATIC_URL }}esb/css/helper.{{CSS_SUFFIX}}' rel="stylesheet">
+{% endblock %}
+{% block main %}
+<div class="main-page box-info">
+    <div class="main-header">
+        <span>组件系统列表</span>
+        {% if systems %}
+        <a class="btn btn-danger btn-min-w f_r mr10" id="systems_delete" href="javascript:;"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+        {% endif %}
+        <a class="btn btn-primary btn-min-w f_r mr10" href="{% url 'manager.system.add' %}"><i class="glyphicon glyphicon-plus"></i> 添加一个新的系统</a>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-9">
+                <div id="table_systems">
+                    <table class="table table-hover table-striped" data-sortable-initialized="true" style="text-align: left;">
+                        <thead>
+                            <tr>
+                                <th style="width:20%">#</th>
+                                <th style="width:20%">系统名称</th>
+                                <th style="width:30%">系统标签</th>
+                                <th style="width:30%">系统接口负责人</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for system in systems %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="system_id" value="{{system.id}}" />
+                            </td>
+                            <td>
+                                {{ system.name|escape }}
+                                <a href="{% url 'manager.system.edit' system.id %}" title="编辑"><i class="glyphicon glyphicon-edit"></i></a>
+                            </td>
+                            <td>{{ system.label|escape }}</td>
+                            <td>{{ system.interface_admin|escape }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" style="text-align: center">您还没有相关组件系统信息
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-3">
+{#                    <h4>帮助</h4>#}
+{#                    <div style="" class="document">#}
+{#                        {{ system_term_html|safe }}#}
+{#                        <p style="margin-top: 5px;">更多详情请查看<a target="_blank" href="{% url 'guide.page.index' %}">#}
+{#                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>#}
+{#                            使用指南#}
+{#                        </a></p>#}
+{#                    </div>#}
+                    <div class="panel panel-info">
+                        <div class="panel-heading ng-binding" style="font-size: 18px;">帮助</div>
+                        <div class="panel-body">
+                            <div style="" class="document">
+                                {{ system_term_html|safe }}
+                                <p style="margin-top: 10px;">更多详情请查看<a target="_blank" href="{% url 'guide.page.index' %}">
+                                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                                    使用指南
+                                </a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% verbatim %}
+
+{% endverbatim %}
+
+<script type="text/javascript">
+    $(function(){
+        var systems_manager = {
+            get_selected_system_ids: function() {
+                var result = []
+                $('input[name="system_id"]:checked').each(function(i, j){
+                    result.push($(j).val());
+                });
+                return result;
+            }
+        };
+
+        // 绑定checkbox修改事件
+        $('input[name="system_id"]').bind('change', function(event){
+            if ($(this).is(':checked')) {
+                $(this).parents('tr').addClass('row-selected');
+            } else {
+                $(this).parents('tr').removeClass('row-selected');
+            }
+        });
+
+        // 为删除按钮绑定事件
+        $('#systems_delete').bind('click', function(){
+            system_ids = systems_manager.get_selected_system_ids();
+            if (system_ids.length === 0) {
+                art.dialog({id: 'bktips', icon: 'warning', lock: true, content: '请先选择待删除的系统！'});
+                return
+            }
+            art.dialog({
+                title: "删除确认",
+                width: 420,
+                icon: "question",
+                lock: true,
+                content: "该操作将删除关联的通道和组件，且不可恢复，是否继续？",
+                ok: function () {
+                    $.post("{% url 'manager.system.deleted' %}", {system_ids: system_ids.join(','), 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+                        function(data) {
+                            if (!data.error_message) {
+                                art.dialog({id: 'bktips', icon: 'succeed', lock: true, content: '成功删除' + data.affected_rows + '个系统！'}).time(1);
+                                window.location.reload();
+                            } else {
+                                art.dialog({id: 'bktips', icon: 'error', lock: true, content: data.error_message})
+                            }
+                        }
+                    );
+                },
+                cancel: function () {},
+                okVal: "确认删除",
+                cancelVal: "取消"
+            }); 
+        });
+    });
+</script>
+{% endblock %}

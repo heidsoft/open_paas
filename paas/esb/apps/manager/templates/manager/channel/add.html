@@ -1,0 +1,44 @@
+{% extends "manager/base.html" %}
+{% load bootstrap %}
+
+{% block main %}
+
+<div class="main-page box-info">
+    <div class="main-header">
+        <span>添加新通道</span>
+    </div>
+
+    <div class="page-content" style="width: 70%">
+        <form action="" method="post" class="form-inline form-columns">{% csrf_token %}
+            {{ form.name|bootstrap }}
+            {{ form.path|bootstrap }}
+            {{ form.component_system|bootstrap }}
+            {{ form.component_codename|bootstrap }}
+            {{ form.type|bootstrap }}
+            {{ form.timeout_time|bootstrap }}
+            {{ form.is_active|bootstrap }}
+            <div class="form-group action">
+                <button type="submit" class="btn btn-primary">确认添加</button> 
+                <button type="button" class="btn btn-default cancel">取消</button> 
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include 'manager/system/add_system_tmpl.html' %}
+{% endblock %}
+
+{% block footer %}
+<script src="{{ STATIC_URL }}esb/js/esb_add_system.{{JS_SUFFIX}}"></script>
+<script src="{{ STATIC_URL }}esb/js/channel.{{JS_SUFFIX}}"></script>
+<script type="text/javascript">
+$(function() {
+    $('button.cancel').bind('click', function() {
+       window.location.href = "{% url 'manager.channel.list' %}";
+    });
+    // 添加系统
+    var url_add_system = "{% url 'manager.api.system.add' %}";
+    add_system(url_add_system, '{{ csrf_token }}', $('#id_component_system'));
+});
+</script>
+{% endblock %}
